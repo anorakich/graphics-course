@@ -153,7 +153,6 @@ void App::drawFrame()
       // TODO: Record your commands here!
       auto computeShaderInfo = etna::get_shader_program("local_shadertoy1");
       
-      // Создаём набор дескрипторов для шейдера
       auto descriptorSet = etna::create_descriptor_set(
         computeShaderInfo.getDescriptorLayoutId(0),
         currentCmdBuf,
