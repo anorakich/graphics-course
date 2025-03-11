@@ -82,7 +82,6 @@ App::App()
   // How it is actually performed is not trivial, but we can skip this for now.
   commandManager = etna::get_context().createPerFrameCmdMgr();
 
-  // Инициализация графических пайплайнов
   etna::create_program("inflight_frames", {INFLIGHT_FRAMES_SHADERS_ROOT "toy.vert.spv",
                                           INFLIGHT_FRAMES_SHADERS_ROOT "toy.frag.spv" });
   pipeline = etna::get_context().getPipelineManager().createGraphicsPipeline("inflight_frames",
