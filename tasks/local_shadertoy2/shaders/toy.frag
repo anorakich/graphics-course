@@ -117,7 +117,6 @@ void main() {
     
     vec3 rayDir = normalize(vec3(uv, 0.0) - cameraPos);
     
-    // Используем shader_image как скайбокс
     vec3 bgColor = texture(shader_image, (rayDir * rotationMatrix).xy * 0.5 + 0.5).rgb;
     vec3 outColor = bgColor;
     
