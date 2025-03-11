@@ -146,7 +146,6 @@ void main() {
         float sum = absLocal.x + absLocal.y + absLocal.z;
         vec3 blendWeights = absLocal / sum;
         
-        // Используем texture_image для трипланарного текстурирования
         vec3 objectColor = blendWeights.x * texture(texture_image, localPos.yz).rgb +
                            blendWeights.y * texture(texture_image, localPos.xz).rgb +
                            blendWeights.z * texture(texture_image, localPos.xy).rgb;
