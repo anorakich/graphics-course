@@ -170,6 +170,7 @@ void App::load_textures(vk::CommandBuffer& currentCmdBuf)
   int x, y, comp;
   auto* texture = stbi_load(INFLIGHT_FRAMES_TEXTURES_ROOT "test_tex_1.png", &x, &y, &comp, 4);
   
+  
   texture_image = etna::create_image_from_bytes(etna::Image::CreateInfo {
     .extent = vk::Extent3D{uint32_t(x), uint32_t(y), 1},
     .name = "textureImage",
@@ -225,20 +226,6 @@ void App::drawFrame()
         
         etna::get_shader_program("inflight_frames_textures");
         currentCmdBuf.bindPipeline(vk::PipelineBindPoint::eGraphics, pipeline_texture.getVkPipeline());
-        
-        struct PushConstants {
-          float time;
-        } pushConstants;
-        pushConstants.time = uniformParams.iTime;
-        
-        currentCmdBuf.pushConstants(
-          pipeline_texture.getVkPipelineLayout(),
-          vk::ShaderStageFlagBits::eVertex,
-          0,
-          sizeof(PushConstants),
-          &pushConstants
-        );
-        
         currentCmdBuf.draw(3, 1, 0, 0);
       }
 
@@ -283,19 +270,6 @@ void App::drawFrame()
         currentCmdBuf.bindPipeline(vk::PipelineBindPoint::eGraphics, pipeline.getVkPipeline());
         currentCmdBuf.bindDescriptorSets(vk::PipelineBindPoint::eGraphics, pipeline.getVkPipelineLayout(), 
                                         0, 1, &vkSet, 0, nullptr);
-
-        struct PushConstants {
-          float time;
-        } pushConstants;
-        pushConstants.time = uniformParams.iTime;
-        
-        currentCmdBuf.pushConstants(
-          pipeline.getVkPipelineLayout(),
-          vk::ShaderStageFlagBits::eVertex,
-          0,
-          sizeof(PushConstants),
-          &pushConstants
-        );
 
         currentCmdBuf.draw(3, 1, 0, 0);
       }
