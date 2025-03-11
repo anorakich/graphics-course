@@ -225,6 +225,20 @@ void App::drawFrame()
         
         etna::get_shader_program("inflight_frames_textures");
         currentCmdBuf.bindPipeline(vk::PipelineBindPoint::eGraphics, pipeline_texture.getVkPipeline());
+        
+        struct PushConstants {
+          float time;
+        } pushConstants;
+        pushConstants.time = uniformParams.iTime;
+        
+        currentCmdBuf.pushConstants(
+          pipeline_texture.getVkPipelineLayout(),
+          vk::ShaderStageFlagBits::eVertex,
+          0,
+          sizeof(PushConstants),
+          &pushConstants
+        );
+        
         currentCmdBuf.draw(3, 1, 0, 0);
       }
 
@@ -269,6 +283,19 @@ void App::drawFrame()
         currentCmdBuf.bindPipeline(vk::PipelineBindPoint::eGraphics, pipeline.getVkPipeline());
         currentCmdBuf.bindDescriptorSets(vk::PipelineBindPoint::eGraphics, pipeline.getVkPipelineLayout(), 
                                         0, 1, &vkSet, 0, nullptr);
+
+        struct PushConstants {
+          float time;
+        } pushConstants;
+        pushConstants.time = uniformParams.iTime;
+        
+        currentCmdBuf.pushConstants(
+          pipeline.getVkPipelineLayout(),
+          vk::ShaderStageFlagBits::eVertex,
+          0,
+          sizeof(PushConstants),
+          &pushConstants
+        );
 
         currentCmdBuf.draw(3, 1, 0, 0);
       }
