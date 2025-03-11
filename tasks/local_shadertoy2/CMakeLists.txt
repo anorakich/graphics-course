@@ -1,6 +1,6 @@
 add_executable(local_shadertoy2
   main.cpp
-  pereeb.cpp
+  App.cpp
 )
 
 target_link_libraries(local_shadertoy2
